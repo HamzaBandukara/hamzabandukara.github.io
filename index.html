@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Hamza Bandukara, PhD</title>
+
+<!-- Meta Data for SEO -->
+<meta name="description" content="Research engineer & computer scientist specializing in formal verification, model checking, and automated reasoning. PhD from Queen Mary University of London.">
+<meta name="keywords" content="formal verification, model checking, automated reasoning, register automata, bisimulation, SMT solver, Z3, research engineer, PhD, computer science">
+<meta name="author" content="Mohamed Hamza Bandukara">
+<link rel="canonical" href="https://hamzabandukara.github.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mohamed Hamza Bandukara, PhD — Formal Verification Engineer">
+<meta property="og:description" content="I build verification tools — and ship them. 4 open-source tools, 4 peer-reviewed publications, production engineering experience. Available July 2026.">
+<meta property="og:url" content="https://hamzabandukara.github.io/">
+<meta property="og:site_name" content="Mohamed Hamza Bandukara">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mohamed Hamza Bandukara, PhD — Formal Verification Engineer">
+<meta name="twitter:description" content="I build verification tools — and ship them. 4 open-source tools, 4 publications, PhD from QMUL.">
+
+<!-- Robots -->
+<meta name="robots" content="index, follow">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mohamed Hamza Bandukara",
+  "url": "https://hamzabandukara.github.io/",
+  "jobTitle": "Postdoctoral Research Assistant",
+  "affiliation": {
+    "@type": "Organization",
+    "name": "Queen Mary University of London"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Queen Mary University of London"
+  },
+  "knowsAbout": ["Formal Verification", "Model Checking", "Automated Reasoning", "Register Automata", "Bisimulation", "SMT Solvers"],
+  "sameAs": [
+    "https://linkedin.com/in/mhb_net",
+    "https://scholar.google.com/citations?user=sH8YdfEAAAAJ",
+    "https://github.com/HamzaBandukara"
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & VARIABLES ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0d1017;
+  --bg-secondary: #131820;
+  --bg-card: #171d27;
+  --bg-card-hover: #1c2333;
+  --text-primary: #e6e1db;
+  --text-secondary: #9ba4b5;
+  --text-muted: #5c6678;
+  --accent: #e8a435;
+  --accent-dim: rgba(232, 164, 53, 0.12);
+  --accent-glow: rgba(232, 164, 53, 0.25);
+  --blue: #5b9bd5;
+  --blue-dim: rgba(91, 155, 213, 0.1);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(232, 164, 53, 0.3);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'Fraunces', serif;
+  --max-w: 860px;
+  --section-gap: 7rem;
+}
+
+/* ========== LIGHT MODE ========== */
+html.light {
+  --bg-primary: #f5f3ef;
+  --bg-secondary: #eae7e1;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f9f8f6;
+  --text-primary: #1a1d24;
+  --text-secondary: #4a5060;
+  --text-muted: #8590a2;
+  --accent: #c47f10;
+  --accent-dim: rgba(196, 127, 16, 0.1);
+  --accent-glow: rgba(196, 127, 16, 0.2);
+  --blue: #3d7ab8;
+  --blue-dim: rgba(61, 122, 184, 0.08);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(196, 127, 16, 0.3);
+}
+
+html.light nav {
+  background: rgba(245, 243, 239, 0.85);
+}
+
+html.light .hero-bg { opacity: 0.08; }
+
+html.light .tool-header .dots span:first-child { background: #ff5f57; }
+html.light .tool-header .dots span:nth-child(2) { background: #febc2e; }
+html.light .tool-header .dots span:nth-child(3) { background: #28c840; }
+
+html.light .pub-item {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+html.light .tool-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover { color: #f0c060; }
+
+/* ========== NAV ========== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(13, 16, 23, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: transform 0.3s;
+}
+
+nav .nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+nav .nav-logo {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+nav .nav-logo span { color: var(--accent); }
+
+nav .nav-links {
+  display: flex;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+nav .nav-links a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+nav .nav-links a:hover { color: var(--text-primary); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  color: var(--text-muted);
+}
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--border-accent);
+}
+.theme-toggle svg { width: 16px; height: 16px; }
+
+/* Show sun in dark mode, moon in light mode */
+.icon-moon { display: none; }
+html.light .icon-sun { display: none; }
+html.light .icon-moon { display: block; }
+
+/* ========== HERO ========== */
+.hero {
+  padding-top: 8rem;
+  padding-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 2px solid var(--border-accent);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-photo .photo-placeholder {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0.5;
+}
+
+.hero-text { flex: 1; }
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.hero-title {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.2rem;
+}
+
+.hero-status {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-bio {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin-top: 1.5rem;
+}
+
+.hero-bio strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 3rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.hero-divider::before,
+.hero-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ========== HERO STATS ========== */
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 0;
+}
+
+.stat-item { text-align: center; flex: 1; }
+
+.stat-number {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-top: 0.2rem;
+}
+
+/* ========== SECTIONS ========== */
+section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--section-gap) 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border-accent), transparent);
+}
+
+/* ========== TRANSITION ARROW DIVIDER ========== */
+.transition-arrow {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.35;
+  letter-spacing: 0.2em;
+}
+
+/* ========== PUBLICATIONS ========== */
+.pub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pub-item {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  transition: all 0.25s ease;
+}
+
+.pub-item:hover {
+  background: var(--bg-card-hover);
+  border-left-color: #f0c060;
+  transform: translateX(4px);
+}
+
+.pub-venue {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.pub-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+}
+
+.pub-title a {
+  color: inherit;
+  transition: color 0.2s;
+}
+.pub-title a:hover { color: var(--accent); }
+
+.pub-authors {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.pub-authors .me { color: var(--text-primary); font-weight: 500; }
+
+.pub-meta {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.pub-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+/* ========== TOOLS / PROJECTS ========== */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.tool-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.tool-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-accent);
+}
+
+.tool-header {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tool-header .dots {
+  display: flex;
+  gap: 4px;
+}
+.tool-header .dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.35;
+}
+.tool-header .dots span:first-child { background: #ff5f57; opacity: 0.7; }
+.tool-header .dots span:nth-child(2) { background: #febc2e; opacity: 0.7; }
+.tool-header .dots span:nth-child(3) { background: #28c840; opacity: 0.7; }
+
+.tool-name {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.tool-subtitle {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.tool-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.tool-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--blue-dim);
+  color: var(--blue);
+  letter-spacing: 0.02em;
+}
+
+.tool-link {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+.tool-link:hover { color: var(--accent); }
+
+.tool-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ========== TIMELINE ========== */
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--border-accent), var(--border));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-node {
+  position: absolute;
+  left: -2.5rem;
+  top: 6px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg-primary);
+  transition: all 0.3s;
+}
+
+.timeline-item:hover .timeline-node {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.timeline-dates {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-role {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.1rem;
+}
+
+.timeline-org {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.timeline-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ========== EDUCATION ========== */
+.edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.edu-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.edu-degree {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.edu-school {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.edu-date {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.edu-thesis {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ========== SKILLS BAR ========== */
+.skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-chip {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 5px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.skill-chip:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+
+.skill-chip.highlight {
+  background: var(--accent-dim);
+  border-color: var(--border-accent);
+  color: var(--accent);
+}
+
+.skills-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-category { }
+
+.skill-cat-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+/* ========== CONTACT ========== */
+.contact-block {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.contact-block h2 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.contact-block p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  transition: all 0.25s;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+  border-color: var(--border-accent);
+  background: var(--accent-dim);
+}
+
+.contact-link svg { width: 16px; height: 16px; }
+
+/* ========== CONSULTING ========== */
+.consulting-banner {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  margin-bottom: 2rem;
+}
+
+.consulting-banner p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.consulting-banner strong {
+  color: var(--accent);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* ========== SCROLL ANIMATION ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  :root {
+    --section-gap: 4.5rem;
+  }
+
+  nav .nav-links { display: none; }
+  nav .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(13, 16, 23, 0.97);
+    padding: 1.5rem 2rem;
+    gap: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hamburger { display: flex; }
+
+  .hero-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-name { text-align: center; }
+  .hero-title { text-align: center; }
+  .hero-status { justify-content: center; }
+  .hero-bio { text-align: center; margin-left: auto; margin-right: auto; }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .stat-item { text-align: center; }
+  .hero-divider { justify-content: center; }
+
+  .edu-grid { grid-template-columns: 1fr; }
+
+  .contact-links { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  section { padding: 3.5rem 1.25rem; }
+  .hero-content { padding: 0 1.25rem; }
+  nav .nav-inner { padding: 0 1.25rem; }
+  .transition-arrow { padding: 0 1.25rem; }
+  .timeline { padding-left: 2rem; }
+  .timeline::before { left: 5px; }
+  .timeline-node { left: -2rem; }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stat-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-align: left;
+  }
+  .stat-number { font-size: 1.3rem; min-width: 2.2rem; text-align: right; }
+  .stat-label { margin-top: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span>λ</span> MHB</div>
+    <div class="nav-right">
+      <button class="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#publications" onclick="closeMenu()">Publications</a></li>
+      <li><a href="#tools" onclick="closeMenu()">Tools</a></li>
+      <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <!-- Background state-machine SVG -->
+  <svg class="hero-bg" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nodes -->
+    <circle cx="200" cy="300" r="35" fill="none" stroke="#e8a435" stroke-width="1"/>
+    <circle cx="200" cy="300" r="28" fill="none" stroke="#e8a435" stroke-width="0.5"/>
+    <circle cx="500" cy="200" r="30" fill="none" stroke="#5b9bd5" stroke-width="1"/>
+    <circle cx="800" cy="350" r="40" fill="none" stroke="#e8a435" stroke-width="1"/>
+    <circle cx="800" cy="350" r="33" fill="none" stroke="#e8a435" stroke-width="0.5"/>
+    <circle cx="600" cy="550" r="25" fill="none" stroke="#5b9bd5" stroke-width="0.8"/>
+    <circle cx="350" cy="600" r="30" fill="none" stroke="#5b9bd5" stroke-width="0.5"/>
+    <circle cx="1000" cy="200" r="28" fill="none" stroke="#e8a435" stroke-width="0.8"/>
+    <circle cx="950" cy="550" r="22" fill="none" stroke="#5b9bd5" stroke-width="0.6"/>
+    <!-- Edges -->
+    <line x1="235" y1="290" x2="470" y2="210" stroke="#5b9bd5" stroke-width="0.6" stroke-dasharray="4,6"/>
+    <line x1="530" y1="210" x2="760" y2="340" stroke="#e8a435" stroke-width="0.6" stroke-dasharray="4,6"/>
+    <line x1="500" y1="230" x2="590" y2="530" stroke="#5b9bd5" stroke-width="0.4" stroke-dasharray="3,8"/>
+    <line x1="625" y1="545" x2="790" y2="380" stroke="#e8a435" stroke-width="0.4" stroke-dasharray="3,8"/>
+    <line x1="840" y1="345" x2="975" y2="210" stroke="#5b9bd5" stroke-width="0.5" stroke-dasharray="4,6"/>
+    <line x1="575" y1="555" x2="380" y2="600" stroke="#e8a435" stroke-width="0.3" stroke-dasharray="3,8"/>
+    <line x1="950" y1="530" x2="830" y2="380" stroke="#5b9bd5" stroke-width="0.4" stroke-dasharray="4,6"/>
+    <!-- Transition labels -->
+    <text x="350" y="235" font-family="JetBrains Mono, monospace" font-size="10" fill="#5b9bd5" opacity="0.5">δ</text>
+    <text x="660" y="270" font-family="JetBrains Mono, monospace" font-size="10" fill="#e8a435" opacity="0.5">τ</text>
+    <text x="910" y="270" font-family="JetBrains Mono, monospace" font-size="10" fill="#5b9bd5" opacity="0.4">α#</text>
+    <!-- Firing edge animation -->
+    <line x1="235" y1="290" x2="470" y2="210" stroke="#e8a435" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" values="0;0.6;0" dur="4s" repeatCount="indefinite" begin="0s"/>
+    </line>
+    <line x1="530" y1="210" x2="760" y2="340" stroke="#5b9bd5" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" values="0;0.5;0" dur="4s" repeatCount="indefinite" begin="2s"/>
+    </line>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-top">
+      <div class="hero-photo">
+        <img src="photo.jpg" alt="Mohamed Hamza Bandukara">
+      </div>
+      <div class="hero-text">
+        <h1 class="hero-name">Mohamed Hamza<br>Bandukara</h1>
+        <div class="hero-title">I build verification tools — and ship them.</div>
+        <div class="hero-status">
+          <span class="status-dot"></span>
+          <span id="status-text">Postdoc @ Queen Mary University of London</span>
+        </div>
+      </div>
+    </div>
+    <p class="hero-bio">
+      I'm a computer scientist who loves building tools that prove things correct. My PhD and postdoc have taken me from designing <strong>novel logics for infinite-alphabet systems</strong> to implementing the model checkers and solvers that bring them to life — resulting in <strong>four open-source tools</strong> and <strong>4 peer-reviewed publications</strong>. I've also spent time in industry, leading engineering teams, integrating ML models into NHS clinical software, and shipping a cross-platform mobile app. I'm happiest at the intersection of rigorous theory and working code. Available from <strong>July 2026</strong>.
+    </p>
+
+    <div class="hero-divider">—δ→</div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">4</div>
+        <div class="stat-label">open-source tools</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4</div>
+        <div class="stat-label">publications</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">years shipping code</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">1</div>
+        <div class="stat-label">PhD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PUBLICATIONS ===== -->
+<div class="transition-arrow">—τ→</div>
+<section id="publications">
+  <div class="section-header fade-in">
+    <span class="section-label">Publications</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pub-list">
+    <div class="pub-item fade-in">
+      <div class="pub-venue">CSL '26</div>
+      <div class="pub-title"><a href="https://drops.dagstuhl.de/entities/volume/LIPIcs-volume-363" target="_blank" rel="noopener">A Logic for Fresh Labelled Transition Systems</a></div>
+      <div class="pub-authors"><span class="me">Mohamed H. Bandukara</span>, Nikos Tzevelekos</div>
+      <div class="pub-meta">34th EACSL Annual Conference on Computer Science Logic · LIPIcs, 2026</div>
+    </div>
+
+    <div class="pub-item fade-in">
+      <div class="pub-venue">JSA '23 <span class="pub-badge">invited journal extension</span></div>
+      <div class="pub-title"><a href="https://www.sciencedirect.com/science/article/pii/S1383762123001893" target="_blank" rel="noopener">On-the-fly bisimulation equivalence checking for fresh-register automata</a></div>
+      <div class="pub-authors"><span class="me">Mohamed H. Bandukara</span>, Nikos Tzevelekos</div>
+      <div class="pub-meta">Journal of Systems Architecture, Elsevier, 2023 · Extended from SETTA '22</div>
+    </div>
+
+    <div class="pub-item fade-in">
+      <div class="pub-venue">SETTA '22</div>
+      <div class="pub-title"><a href="https://link.springer.com/chapter/10.1007/978-3-031-21213-0_12" target="_blank" rel="noopener">On-the-fly bisimilarity checking for fresh-register automata</a></div>
+      <div class="pub-authors"><span class="me">Mohamed H. Bandukara</span>, Nikos Tzevelekos</div>
+      <div class="pub-meta">International Symposium on Dependable Software Engineering (SETTA) · Springer, pp. 187–204, 2022</div>
+    </div>
+
+    <div class="pub-item fade-in">
+      <div class="pub-venue">FICS '24 <span class="pub-badge">work in progress</span></div>
+      <div class="pub-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sH8YdfEAAAAJ&citation_for_view=sH8YdfEAAAAJ:9yKSN-GCB0IC" target="_blank" rel="noopener">Nominal Modal Logics for Fresh-Register Automata</a></div>
+      <div class="pub-authors"><span class="me">Mohamed H. Bandukara</span>, Nikos Tzevelekos</div>
+      <div class="pub-meta">Fixed Points in Computer Science, 2024</div>
+    </div>
+
+    <div class="pub-item fade-in">
+      <div class="pub-venue">PhD Thesis <span class="pub-badge">QMUL · 2025</span></div>
+      <div class="pub-title"><a href="https://qmro.qmul.ac.uk/xmlui/handle/123456789/112609" target="_blank" rel="noopener">Model Checking and Verification of Fresh-Register Automata</a></div>
+      <div class="pub-authors"><span class="me">Mohamed H. Bandukara</span></div>
+      <div class="pub-meta">Queen Mary University of London, 2025 · Supervisor: Nikos Tzevelekos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOOLS & PROJECTS ===== -->
+<div class="transition-arrow">—α#→</div>
+<section id="tools">
+  <div class="section-header fade-in">
+    <span class="section-label">Tools & Projects</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card fade-in">
+      <div class="tool-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        ~/tools/pycad
+      </div>
+      <div class="tool-name">PyCAD</div>
+      <div class="tool-subtitle">Probabilistic Analysis · Python/C++ · 2026</div>
+      <div class="tool-desc">
+        Computes <strong>exact output distributions</strong> of nonlinear functions over uncertain inputs using Cylindrical Algebraic Decomposition and Z3 — replacing Monte Carlo approximation with provable symbolic results. Includes automated K-S statistical validation. Built from scratch during my postdoc.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">C++</span>
+        <span class="tool-tag">Z3</span>
+        <span class="tool-tag">QEPCAD B</span>
+        <span class="tool-tag">Maxima</span>
+      </div>
+      <a href="https://github.com/hamzabandukara/pycad" target="_blank" rel="noopener" class="tool-link">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/hamzabandukara/pycad
+      </a>
+    </div>
+
+    <div class="tool-card fade-in">
+      <div class="tool-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        ~/tools/ram-c
+      </div>
+      <div class="tool-name">RAM-C</div>
+      <div class="tool-subtitle">Model Checker · Published at CSL '26</div>
+      <div class="tool-desc">
+        Checks whether infinite-alphabet state machines satisfy behavioural safety properties — implementing the <strong>novel modal logic</strong> I formulated in my PhD. The theory-to-tool pipeline: I designed the logic, proved its properties, and built the checker.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">Java</span>
+        <span class="tool-tag">Haskell</span>
+        <span class="tool-tag">Model Checking</span>
+      </div>
+      <a href="https://github.com/HamzaBandukara/RAM-C" target="_blank" rel="noopener" class="tool-link">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/HamzaBandukara/RAM-C
+      </a>
+    </div>
+
+    <div class="tool-card fade-in">
+      <div class="tool-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        ~/tools/rabit
+      </div>
+      <div class="tool-name">RABiT</div>
+      <div class="tool-subtitle">Bisimulation Checker · SETTA '22 / JSA '23</div>
+      <div class="tool-desc">
+        On-the-fly bisimilarity checking for fresh-register automata — computes <strong>behavioural equivalence over infinite alphabets</strong> without full state-space exploration. Benchmarked against existing deterministic approaches with measurable performance improvements.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Java</span>
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">Bisimulation</span>
+        <span class="tool-tag">Benchmarking</span>
+      </div>
+      <a href="https://github.com/HamzaBandukara/FRABisim" target="_blank" rel="noopener" class="tool-link">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/HamzaBandukara/FRABisim
+      </a>
+    </div>
+
+    <div class="tool-card fade-in">
+      <div class="tool-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        ~/tools/paf
+      </div>
+      <div class="tool-name">PAF</div>
+      <div class="tool-subtitle">Modernised Fork · Floating-Point Error Analysis · 2025</div>
+      <div class="tool-desc">
+        Modernised fork of SOARLAB's probabilistic floating-point error analysis tool. Updated to <strong>Python 3.10+</strong>, latest Rust toolchain, Z3-exclusive solving, and added Docker support for cross-platform deployment. Original analysis by SOARLAB, University of Utah.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">Rust</span>
+        <span class="tool-tag">Z3</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">Floating-Point</span>
+      </div>
+      <a href="https://github.com/HamzaBandukara/paf" target="_blank" rel="noopener" class="tool-link">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/HamzaBandukara/paf
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<div class="transition-arrow">—δ→</div>
+<section id="experience">
+  <div class="section-header fade-in">
+    <span class="section-label">Experience</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Oct 2025 — Present</div>
+      <div class="timeline-role">Postdoctoral Research Assistant</div>
+      <div class="timeline-org">Queen Mary University of London</div>
+      <div class="timeline-desc">
+        Extended PAF, a floating-point error analysis tool, with precision-tuning and conditional branching to verify correctness of arithmetic expressions over the Reals. Built PyCAD and architected modular tooling for AST generation, supporting automated program analysis and property checking.
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Sept 2021 — Present</div>
+      <div class="timeline-role">Teaching Fellow</div>
+      <div class="timeline-org">Queen Mary University of London</div>
+      <div class="timeline-desc">
+        Lecturing Automata &amp; Formal Languages and Logic &amp; Discrete Structures to 400+ students. Supervised MSc dissertations on AI security, ML reliability, and generative AI evaluation.
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Sept 2019 — Mar 2025</div>
+      <div class="timeline-role">PhD Research Scientist</div>
+      <div class="timeline-org">Queen Mary University of London</div>
+      <div class="timeline-desc">
+        Designed and implemented RAM-C (Python/Java/Haskell), a model checker for verifying protocol adherence and safety properties of register automata over infinite alphabets. Developed bisimulation equivalence algorithms with benchmarked improvements. Built end-to-end verification pipelines from property specification through counterexample analysis. Published across 4 peer-reviewed venues.
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Mar 2021 — May 2024</div>
+      <div class="timeline-role">Senior Full-Stack Developer</div>
+      <div class="timeline-org">Invitology</div>
+      <div class="timeline-desc">
+        Architected and scaled REST API infrastructure with robust third-party integrations. Led a team of 5 engineers to deliver a cross-platform mobile application (React Native). Reduced infrastructure delivery time by 30% through automated CI/CD pipelines.
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Sept 2021 — Sept 2022</div>
+      <div class="timeline-role">Full-Stack Developer</div>
+      <div class="timeline-org">SSNAP · King's College London</div>
+      <div class="timeline-desc">
+        Integrated XGBoost models into mission-critical NHS clinical software for patient outcome prediction. Built automated pipelines for model deployment and prediction reliability.
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-node"></div>
+      <div class="timeline-dates">Aug 2018 — Feb 2019</div>
+      <div class="timeline-role">Algorithmic &amp; Optimization Developer</div>
+      <div class="timeline-org">FameUs</div>
+      <div class="timeline-desc">
+        Designed constraint-based matching algorithms (Python/SQL) and achieved 25% reduction in database query latency.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDUCATION ===== -->
+<div class="transition-arrow">—τ→</div>
+<section id="education">
+  <div class="section-header fade-in">
+    <span class="section-label">Education</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card fade-in">
+      <div class="edu-degree">PhD in Computer Science</div>
+      <div class="edu-school">Queen Mary University of London</div>
+      <div class="edu-date">Awarded Nov 2025</div>
+      <div class="edu-thesis">Thesis: Model Checking & Verification of Fresh-Register Automata</div>
+    </div>
+    <div class="edu-card fade-in">
+      <div class="edu-degree">BSc Computer Science</div>
+      <div class="edu-school">Queen Mary University of London</div>
+      <div class="edu-date">Sept 2016 — Jun 2019</div>
+      <div class="edu-thesis">First-Class Honours</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<div class="transition-arrow">—α#→</div>
+<section id="skills">
+  <div class="section-header fade-in">
+    <span class="section-label">Technical Skills</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-categories fade-in">
+    <div class="skill-category">
+      <div class="skill-cat-label">Formal Methods & Verification</div>
+      <div class="skills-wrap">
+        <span class="skill-chip highlight">Model Checking</span>
+        <span class="skill-chip highlight">Z3 / SMT Solvers</span>
+        <span class="skill-chip highlight">Bisimulation</span>
+        <span class="skill-chip">CAD Algorithms</span>
+        <!-- <span class="skill-chip">Coq</span>
+        <span class="skill-chip">Lean</span> -->
+        <span class="skill-chip">Modal Logic</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">Languages & Systems</div>
+      <div class="skills-wrap">
+        <span class="skill-chip highlight">Python</span>
+        <span class="skill-chip highlight">C++</span>
+        <span class="skill-chip">Haskell</span>
+        <span class="skill-chip">Java</span>
+        <span class="skill-chip">C#</span>
+        <span class="skill-chip">JavaScript</span>
+        <span class="skill-chip">Bash</span>
+        <span class="skill-chip">Linux</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">ML & Production Engineering</div>
+      <div class="skills-wrap">
+        <span class="skill-chip">XGBoost</span>
+        <span class="skill-chip">React Native</span>
+        <span class="skill-chip">REST APIs</span>
+        <span class="skill-chip">CI/CD</span>
+        <span class="skill-chip">PostgreSQL</span>
+        <span class="skill-chip">MongoDB</span>
+        <span class="skill-chip">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<div class="transition-arrow">—τ→</div>
+<section id="contact">
+  <div class="consulting-banner fade-in">
+    <p><strong>Available for consulting:</strong> formal verification audits, smart contract analysis, and bespoke verification tooling.</p>
+  </div>
+  <div class="contact-block fade-in">
+    <h2>Get in Touch</h2>
+    <p>Interested in automated reasoning, formal verification, AI safety, or smart contract analysis? I'm available from July 2026 and open to both permanent and consulting roles.</p>
+    <div class="contact-links">
+      <a href="mailto:hamzabandukara@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        hamzabandukara@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/mhbnet" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.com/citations?user=sH8YdfEAAAAJ" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        Google Scholar
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Mohamed Hamza Bandukara · Built with HTML, CSS & stubbornness</p>
+</footer>
+
+<script>
+// Theme toggle with localStorage persistence
+function toggleTheme() {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+// Apply saved preference on load (or respect system preference)
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.documentElement.classList.add('light');
+  } else if (!saved && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.classList.add('light');
+  }
+})();
+
+// Scroll-triggered fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Mobile menu close
+function closeMenu() {
+  document.querySelector('.nav-links').classList.remove('open');
+}
+
+// Rotating status text
+const statuses = [
+  'Postdoc @ Queen Mary · available July 2026',
+  'last published → CSL \'26',
+  'currently building → PyCAD',
+  'coffee state: ☕ accepting',
+  'PhD who ships tools, not just papers'
+];
+let statusIdx = 0;
+const statusEl = document.getElementById('status-text');
+
+setInterval(() => {
+  statusEl.style.opacity = '0';
+  setTimeout(() => {
+    statusIdx = (statusIdx + 1) % statuses.length;
+    statusEl.textContent = statuses[statusIdx];
+    statusEl.style.opacity = '1';
+  }, 400);
+}, 4000);
+
+statusEl.style.transition = 'opacity 0.4s ease';
+
+// Smooth scroll offset for fixed nav
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const offset = 70;
+      const pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
